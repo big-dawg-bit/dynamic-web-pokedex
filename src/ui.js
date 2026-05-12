@@ -1,4 +1,3 @@
-
 import { isFavorite } from './favorites.js';
 
 const TYPE_COLORS = {
@@ -21,11 +20,12 @@ const TYPE_COLORS = {
   steel: '#B8B8D0',
   fairy: '#EE99AC',
 };
-
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 const formatId = (id) => `#${String(id).padStart(3, '0')}`;
 const formatHeight = (dm) => `${(dm / 10).toFixed(1)} m`;
 const formatWeight = (hg) => `${(hg / 10).toFixed(1)} kg`;
+
+const humanize = (str) => capitalize(str.replace(/-/g, ' '));
 
 const renderTypeBadges = (types) =>
   types
@@ -65,7 +65,6 @@ export const renderCardGrid = (pokemonList, container) => {
   `;
 };
 
-
 const renderTableRow = (pokemon) => `
   <tr data-id="${pokemon.id}">
     <td class="cell-id">${formatId(pokemon.id)}</td>
@@ -98,6 +97,53 @@ export const renderTable = (pokemonList, container) => {
         ${pokemonList.map(renderTableRow).join('')}
       </tbody>
     </table>
+  `;
+};
+
+const renderStatBar = (statName, value) => {
+  const percentage = Math.min((value / 255) * 100, 100);
+  return `
+    <div class="stat-row">
+      <span class="stat-name">${humanize(statName)}</span>
+      <span class="stat-value">${value}</span>
+      <div class="stat-bar-track">
+        <div class="stat-bar-fill" style="width: ${percentage}%"></div>
+      </div>
+    </div>
+  `;
+};
+
+export const renderDetail = (pokemon) => {
+  const statRows = pokemon.stats.map((s) => renderStatBar(s.name, s.value)).join('');
+  const abilityList = pokemon.abilities
+    .map((a) => `<li>${humanize(a)}</li>`)
+    .join('');
+
+  return `
+    <div class="detail-header">
+      <img src="${pokemon.sprite}" alt="${pokemon.name}" class="detail-sprite" />
+      <div class="detail-meta">
+        <div class="detail-id">${formatId(pokemon.id)}</div>
+        <h2 class="detail-name">${capitalize(pokemon.name)}</h2>
+        <div class="detail-types">${renderTypeBadges(pokemon.types)}</div>
+      </div>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-section">
+        <h3>Physical</h3>
+        <p><strong>Height:</strong> ${formatHeight(pokemon.height)}</p>
+        <p><strong>Weight:</strong> ${formatWeight(pokemon.weight)}</p>
+        <p><strong>Base XP:</strong> ${pokemon.baseExperience}</p>
+      </div>
+      <div class="detail-section">
+        <h3>Abilities</h3>
+        <ul class="ability-list">${abilityList}</ul>
+      </div>
+      <div class="detail-section detail-section--wide">
+        <h3>Base Stats</h3>
+        <div class="stats-list">${statRows}</div>
+      </div>
+    </div>
   `;
 };
 
