@@ -1,6 +1,6 @@
 import './style.css';
 import { getAllPokemon, getUniqueTypes } from './api.js';
-import { renderCardGrid, renderTable, capitalize } from './ui.js';
+import { renderCardGrid, renderTable, renderDetail, capitalize } from './ui.js';
 import { applyFilters } from './filters.js';
 import { toggleFavorite, getFavoriteCount } from './favorites.js';
 import { initTheme, toggleTheme } from './preferences.js';
@@ -15,7 +15,6 @@ const filterState = {
   sortBy: 'id-asc',
   favoritesOnly: false,
 };
-
 const app = document.querySelector('#app');
 const controls = document.querySelector('.controls');
 const resultCount = document.querySelector('#result-count');
@@ -24,7 +23,8 @@ const typeFilter = document.querySelector('#type-filter');
 const sortSelect = document.querySelector('#sort-by');
 const favoritesToggle = document.querySelector('#favorites-toggle');
 const themeToggle = document.querySelector('#theme-toggle');
-
+const modal = document.querySelector('#detail-modal');
+const detailContent = document.querySelector('#detail-content');
 const render = () => {
   const visible = applyFilters(pokemon, filterState);
 
@@ -33,7 +33,7 @@ const render = () => {
       ? `Showing all ${pokemon.length} Pokemon`
       : `Showing ${visible.length} of ${pokemon.length} Pokemon`;
 
-  favoritesToggle.textContent = `<3 Favorites (${getFavoriteCount()})`;
+  favoritesToggle.textContent = `♥ Favorites (${getFavoriteCount()})`;
   favoritesToggle.classList.toggle('active', filterState.favoritesOnly);
 
   if (visible.length === 0) {
@@ -72,6 +72,17 @@ const updateThemeButton = (theme) => {
     theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
   );
 };
+const openDetail = (id) => {
+  const target = pokemon.find((p) => p.id === id);
+  if (!target) return;
+  detailContent.innerHTML = renderDetail(target);
+  modal.hidden = false;
+  document.body.style.overflow = 'hidden';
+};
+const closeDetail = () => {
+  modal.hidden = true;
+  document.body.style.overflow = '';
+};
 
 const wireViewToggle = () => {
   controls.addEventListener('click', (event) => {
@@ -108,8 +119,7 @@ const wireFavoriteButtons = () => {
   app.addEventListener('click', (event) => {
     const heartBtn = event.target.closest('.favorite-btn');
     if (!heartBtn) return;
-
-    event.stopPropagation();
+    event.stopImmediatePropagation();
     const id = parseInt(heartBtn.dataset.id, 10);
     toggleFavorite(id);
     render();
@@ -123,6 +133,28 @@ const wireThemeToggle = () => {
   });
 };
 
+const wireDetailModal = () => {
+  app.addEventListener('click', (event) => {
+    const cardOrRow = event.target.closest('.pokemon-card, .pokemon-table tbody tr');
+    if (!cardOrRow) return;
+
+    const id = parseInt(cardOrRow.dataset.id, 10);
+    openDetail(id);
+  });
+
+  modal.addEventListener('click', (event) => {
+    if (event.target.closest('[data-close]')) {
+      closeDetail();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !modal.hidden) {
+      closeDetail();
+    }
+  });
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('Pokedex booting...');
 
@@ -133,6 +165,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   wireFilterControls();
   wireFavoriteButtons();
   wireThemeToggle();
+  wireDetailModal();
 
   try {
     pokemon = await getAllPokemon();

@@ -13,7 +13,6 @@
   --radius: 10px;
 }
 
-/* === Dark theme overrides === */
 body.theme-dark {
   --bg: #1a1a1a;
   --card-bg: #2d2d2d;
@@ -67,7 +66,6 @@ header h1 {
   background: var(--hover-bg);
 }
 
-/* === Controls bar === */
 .controls {
   padding: 0.75rem 2rem;
   background: var(--card-bg);
@@ -129,7 +127,6 @@ header h1 {
   outline-offset: -1px;
 }
 
-/* === Result count + empty state === */
 .result-count {
   padding: 0.5rem 2rem;
   font-size: 0.85rem;
@@ -147,7 +144,7 @@ header h1 {
   padding: 0 2rem 2rem;
 }
 
-/* === Pokemon grid (cards view) === */
+/* === Pokemon grid === */
 .pokemon-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -163,8 +160,6 @@ header h1 {
   box-shadow: var(--shadow);
   cursor: pointer;
 
-  /* Initial state — invisible and shifted down. IntersectionObserver adds
-     .is-visible when the card scrolls into view, triggering the reveal. */
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.3s ease;
@@ -203,7 +198,6 @@ header h1 {
   flex-wrap: wrap;
 }
 
-/* === Favorite button === */
 .favorite-btn {
   position: absolute;
   top: 0.5rem;
@@ -225,7 +219,7 @@ header h1 {
   position: static;
 }
 
-/* === Pokemon table (list view) === */
+/* === Pokemon table === */
 .pokemon-table {
   width: 100%;
   border-collapse: collapse;
@@ -273,7 +267,6 @@ header h1 {
   flex-wrap: wrap;
 }
 
-/* === Type badges (shared) === */
 .type-badge {
   display: inline-block;
   padding: 0.2rem 0.6rem;
@@ -281,4 +274,162 @@ header h1 {
   color: white;
   font-size: 0.75rem;
   font-weight: 500;
+}
+
+/* === Detail modal === */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  position: relative;
+  background: var(--card-bg);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 2rem;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0.25rem 0.5rem;
+}
+
+.modal-close:hover {
+  color: var(--text);
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.detail-sprite {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+}
+
+.detail-id {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.detail-name {
+  margin: 0.25rem 0;
+  font-size: 1.8rem;
+}
+
+.detail-types {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.detail-section h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detail-section p {
+  margin: 0.25rem 0;
+}
+
+.detail-section--wide {
+  grid-column: 1 / -1;
+}
+
+.ability-list {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.ability-list li {
+  text-transform: capitalize;
+}
+
+.stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: 130px 50px 1fr;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.stat-name {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.stat-value {
+  font-weight: 600;
+  text-align: right;
+}
+
+.stat-bar-track {
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+@media (max-width: 500px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
 }
