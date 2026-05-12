@@ -161,11 +161,21 @@ header h1 {
   padding: 1rem;
   text-align: center;
   box-shadow: var(--shadow);
-  transition: transform 0.15s ease;
   cursor: pointer;
+
+  /* Initial state — invisible and shifted down. IntersectionObserver adds
+     .is-visible when the card scrolls into view, triggering the reveal. */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.3s ease;
 }
 
-.pokemon-card:hover {
+.pokemon-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pokemon-card.is-visible:hover {
   transform: translateY(-3px);
 }
 

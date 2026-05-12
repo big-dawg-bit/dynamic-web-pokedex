@@ -4,6 +4,7 @@ import { renderCardGrid, renderTable, capitalize } from './ui.js';
 import { applyFilters } from './filters.js';
 import { toggleFavorite, getFavoriteCount } from './favorites.js';
 import { initTheme, toggleTheme } from './preferences.js';
+import { observeCards } from './observer.js';
 
 let pokemon = [];
 let currentView = 'cards';
@@ -25,6 +26,7 @@ const favoritesToggle = document.querySelector('#favorites-toggle');
 const themeToggle = document.querySelector('#theme-toggle');
 
 
+
 const render = () => {
   const visible = applyFilters(pokemon, filterState);
 
@@ -43,6 +45,7 @@ const render = () => {
 
   if (currentView === 'cards') {
     renderCardGrid(visible, app);
+    observeCards();
   } else {
     renderTable(visible, app);
   }
@@ -71,7 +74,6 @@ const updateThemeButton = (theme) => {
     theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
   );
 };
-
 
 const wireViewToggle = () => {
   controls.addEventListener('click', (event) => {
