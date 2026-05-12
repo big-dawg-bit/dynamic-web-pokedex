@@ -25,8 +25,6 @@ const sortSelect = document.querySelector('#sort-by');
 const favoritesToggle = document.querySelector('#favorites-toggle');
 const themeToggle = document.querySelector('#theme-toggle');
 
-
-
 const render = () => {
   const visible = applyFilters(pokemon, filterState);
 
@@ -35,7 +33,7 @@ const render = () => {
       ? `Showing all ${pokemon.length} Pokemon`
       : `Showing ${visible.length} of ${pokemon.length} Pokemon`;
 
-  favoritesToggle.textContent = `♥ Favorites (${getFavoriteCount()})`;
+  favoritesToggle.textContent = `<3 Favorites (${getFavoriteCount()})`;
   favoritesToggle.classList.toggle('active', filterState.favoritesOnly);
 
   if (visible.length === 0) {
@@ -124,7 +122,6 @@ const wireThemeToggle = () => {
     updateThemeButton(newTheme);
   });
 };
-
 
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('Pokedex booting...');

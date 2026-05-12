@@ -7,14 +7,13 @@ export const observeCards = () => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
-          // Once revealed, stop watching this card — animation only fires once
           observer.unobserve(entry.target);
         }
       });
     },
     {
-      threshold: 0.1, // 10% of the card must be visible to trigger
-      rootMargin: '0px 0px -50px 0px', // fire slightly before fully on-screen
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px',
     }
   );
 
