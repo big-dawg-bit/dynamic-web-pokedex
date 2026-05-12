@@ -3,6 +3,7 @@ import { getAllPokemon, getUniqueTypes } from './api.js';
 import { renderCardGrid, renderTable, capitalize } from './ui.js';
 import { applyFilters } from './filters.js';
 import { toggleFavorite, getFavoriteCount } from './favorites.js';
+import { initTheme, toggleTheme } from './preferences.js';
 
 let pokemon = [];
 let currentView = 'cards';
@@ -21,17 +22,16 @@ const searchInput = document.querySelector('#search');
 const typeFilter = document.querySelector('#type-filter');
 const sortSelect = document.querySelector('#sort-by');
 const favoritesToggle = document.querySelector('#favorites-toggle');
+const themeToggle = document.querySelector('#theme-toggle');
 
 
 const render = () => {
   const visible = applyFilters(pokemon, filterState);
 
-
   resultCount.textContent =
     visible.length === pokemon.length
       ? `Showing all ${pokemon.length} Pokemon`
       : `Showing ${visible.length} of ${pokemon.length} Pokemon`;
-
 
   favoritesToggle.textContent = `♥ Favorites (${getFavoriteCount()})`;
   favoritesToggle.classList.toggle('active', filterState.favoritesOnly);
@@ -63,6 +63,15 @@ const populateTypeFilter = () => {
     typeFilter.appendChild(option);
   });
 };
+
+const updateThemeButton = (theme) => {
+  themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  themeToggle.setAttribute(
+    'aria-label',
+    theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
+  );
+};
+
 
 const wireViewToggle = () => {
   controls.addEventListener('click', (event) => {
@@ -100,19 +109,31 @@ const wireFavoriteButtons = () => {
     const heartBtn = event.target.closest('.favorite-btn');
     if (!heartBtn) return;
 
-    event.stopPropagation(); // don't bubble to card click handlers later
+    event.stopPropagation();
     const id = parseInt(heartBtn.dataset.id, 10);
     toggleFavorite(id);
     render();
   });
 };
 
+const wireThemeToggle = () => {
+  themeToggle.addEventListener('click', () => {
+    const newTheme = toggleTheme();
+    updateThemeButton(newTheme);
+  });
+};
+
+
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('Pokedex booting...');
+
+  const initialTheme = initTheme();
+  updateThemeButton(initialTheme);
 
   wireViewToggle();
   wireFilterControls();
   wireFavoriteButtons();
+  wireThemeToggle();
 
   try {
     pokemon = await getAllPokemon();

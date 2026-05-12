@@ -1,12 +1,29 @@
-/* === CSS custom properties (theming added in Phase 8) === */
+/* === CSS custom properties — light theme defaults === */
 :root {
   --bg: #f5f5f5;
   --card-bg: #ffffff;
+  --hover-bg: #f0f0f0;
+  --row-hover: #f8f8f8;
   --text: #2c3e50;
   --text-muted: #7f8c8d;
   --border: #e0e0e0;
   --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --accent: #2c3e50;
+  --accent-text: #ffffff;
   --radius: 10px;
+}
+
+/* === Dark theme overrides === */
+body.theme-dark {
+  --bg: #1a1a1a;
+  --card-bg: #2d2d2d;
+  --hover-bg: #3a3a3a;
+  --row-hover: #353535;
+  --text: #e0e0e0;
+  --text-muted: #aaaaaa;
+  --border: #404040;
+  --shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  --accent: #4a6fa5;
 }
 
 * {
@@ -19,17 +36,35 @@ body {
   color: var(--text);
   font-family: system-ui, -apple-system, sans-serif;
   line-height: 1.5;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 header {
   padding: 1rem 2rem;
   background: var(--card-bg);
   box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 header h1 {
   margin: 0;
   font-size: 1.75rem;
+}
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 0.7rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--hover-bg);
 }
 
 /* === Controls bar === */
@@ -54,7 +89,7 @@ header h1 {
 .filter-toggle {
   padding: 0.4rem 0.9rem;
   background: transparent;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.9rem;
@@ -64,13 +99,13 @@ header h1 {
 
 .view-toggle:hover,
 .filter-toggle:hover {
-  background: #f0f0f0;
+  background: var(--hover-bg);
 }
 
 .view-toggle.active {
-  background: var(--text);
-  color: white;
-  border-color: var(--text);
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
 }
 
 .filter-toggle.active {
@@ -81,16 +116,16 @@ header h1 {
 
 .control-input {
   padding: 0.4rem 0.7rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   border-radius: 6px;
-  background: white;
+  background: var(--card-bg);
   font-size: 0.9rem;
   color: var(--text);
   min-width: 150px;
 }
 
 .control-input:focus {
-  outline: 2px solid var(--text);
+  outline: 2px solid var(--accent);
   outline-offset: -1px;
 }
 
@@ -176,7 +211,6 @@ header h1 {
   transform: scale(1.2);
 }
 
-/* Heart button inside the table cell — not absolutely positioned */
 .pokemon-table .favorite-btn {
   position: static;
 }
@@ -192,8 +226,8 @@ header h1 {
 }
 
 .pokemon-table thead {
-  background: var(--text);
-  color: white;
+  background: var(--accent);
+  color: var(--accent-text);
 }
 
 .pokemon-table th,
@@ -210,7 +244,7 @@ header h1 {
 }
 
 .pokemon-table tbody tr:hover {
-  background: #f8f8f8;
+  background: var(--row-hover);
 }
 
 .pokemon-table .cell-sprite img {
