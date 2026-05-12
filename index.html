@@ -10,9 +10,37 @@
       <h1>Pokedex</h1>
     </header>
     <nav class="controls">
-      <button class="view-toggle active" data-view="cards">Cards</button>
-      <button class="view-toggle" data-view="table">Table</button>
+      <div class="control-group">
+        <button class="view-toggle active" data-view="cards">Cards</button>
+        <button class="view-toggle" data-view="table">Table</button>
+      </div>
+
+      <div class="control-group">
+        <input
+          type="search"
+          id="search"
+          class="control-input"
+          placeholder="Search by name..."
+          autocomplete="off"
+        />
+        <select id="type-filter" class="control-input">
+          <option value="all">All types</option>
+        </select>
+        <select id="sort-by" class="control-input">
+          <option value="id-asc">ID (low → high)</option>
+          <option value="id-desc">ID (high → low)</option>
+          <option value="name-asc">Name (A → Z)</option>
+          <option value="name-desc">Name (Z → A)</option>
+          <option value="height-asc">Height (small → tall)</option>
+          <option value="height-desc">Height (tall → small)</option>
+          <option value="weight-asc">Weight (light → heavy)</option>
+          <option value="weight-desc">Weight (heavy → light)</option>
+          <option value="xp-asc">Base XP (low → high)</option>
+          <option value="xp-desc">Base XP (high → low)</option>
+        </select>
+      </div>
     </nav>
+    <div id="result-count" class="result-count">Loading...</div>
     <main id="app">
       <p>Loading...</p>
     </main>

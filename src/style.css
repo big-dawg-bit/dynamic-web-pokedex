@@ -32,11 +32,18 @@ header h1 {
   font-size: 1.75rem;
 }
 
-/* === Controls bar (view toggle, filters later) === */
+/* === Controls bar === */
 .controls {
   padding: 0.75rem 2rem;
   background: var(--card-bg);
   border-top: 1px solid var(--border);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.control-group {
   display: flex;
   gap: 0.5rem;
   align-items: center;
@@ -64,8 +71,37 @@ header h1 {
   border-color: var(--text);
 }
 
+.control-input {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: white;
+  font-size: 0.9rem;
+  color: var(--text);
+  min-width: 150px;
+}
+
+.control-input:focus {
+  outline: 2px solid var(--text);
+  outline-offset: -1px;
+}
+
+/* === Result count + empty state === */
+.result-count {
+  padding: 0.5rem 2rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
 #app {
-  padding: 1rem 2rem;
+  padding: 0 2rem 2rem;
 }
 
 /* === Pokemon grid (cards view) === */

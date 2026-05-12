@@ -1,25 +1,61 @@
 
 import './style.css';
-import { getAllPokemon } from './api.js';
-import { renderCardGrid, renderTable } from './ui.js';
+import { getAllPokemon, getUniqueTypes } from './api.js';
+import { renderCardGrid, renderTable, capitalize } from './ui.js';
+import { applyFilters } from './filters.js';
 
 let pokemon = [];
-let currentView = 'cards'; // 'cards' or 'table'
+let currentView = 'cards'; 
+
+const filterState = {
+  search: '',
+  type: 'all',
+  sortBy: 'id-asc',
+};
 
 const app = document.querySelector('#app');
 const controls = document.querySelector('.controls');
+const resultCount = document.querySelector('#result-count');
+const searchInput = document.querySelector('#search');
+const typeFilter = document.querySelector('#type-filter');
+const sortSelect = document.querySelector('#sort-by');
+
 
 const render = () => {
+  const visible = applyFilters(pokemon, filterState);
+
+  
+  resultCount.textContent =
+    visible.length === pokemon.length
+      ? `Showing all ${pokemon.length} Pokemon`
+      : `Showing ${visible.length} of ${pokemon.length} Pokemon`;
+
+ 
+  if (visible.length === 0) {
+    app.innerHTML = `<p class="empty-state">No Pokemon match your filters.</p>`;
+    return;
+  }
+
   if (currentView === 'cards') {
-    renderCardGrid(pokemon, app);
+    renderCardGrid(visible, app);
   } else {
-    renderTable(pokemon, app);
+    renderTable(visible, app);
   }
 };
 
 const updateToggleUI = () => {
   document.querySelectorAll('.view-toggle').forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.view === currentView);
+  });
+};
+
+const populateTypeFilter = () => {
+  const types = getUniqueTypes(pokemon);
+  types.forEach((type) => {
+    const option = document.createElement('option');
+    option.value = type;
+    option.textContent = capitalize(type);
+    typeFilter.appendChild(option);
   });
 };
 
@@ -32,13 +68,31 @@ const wireViewToggle = () => {
   });
 };
 
+const wireFilterControls = () => {
+  searchInput.addEventListener('input', (event) => {
+    filterState.search = event.target.value;
+    render();
+  });
+
+  typeFilter.addEventListener('change', (event) => {
+    filterState.type = event.target.value;
+    render();
+  });
+
+  sortSelect.addEventListener('change', (event) => {
+    filterState.sortBy = event.target.value;
+    render();
+  });
+};
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('Pokedex booting...');
 
   wireViewToggle();
+  wireFilterControls();
 
   try {
     pokemon = await getAllPokemon();
+    populateTypeFilter();
     render();
   } catch (err) {
     app.innerHTML = `<p>Error loading Pokemon: ${err.message}</p>`;
