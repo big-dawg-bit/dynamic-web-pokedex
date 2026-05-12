@@ -1,1 +1,91 @@
-/* Styles added in Phase 8 (polish). */
+/* === CSS custom properties (theming added in Phase 8) === */
+:root {
+  --bg: #f5f5f5;
+  --card-bg: #ffffff;
+  --text: #2c3e50;
+  --text-muted: #7f8c8d;
+  --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+}
+
+header {
+  padding: 1rem 2rem;
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+#app {
+  padding: 1rem 2rem;
+}
+
+/* === Pokemon grid === */
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+/* === Pokemon card === */
+.pokemon-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease;
+  cursor: pointer;
+}
+
+.pokemon-card:hover {
+  transform: translateY(-3px);
+}
+
+.pokemon-card__id {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.pokemon-card__sprite {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.pokemon-card__name {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.pokemon-card__types {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.type-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
