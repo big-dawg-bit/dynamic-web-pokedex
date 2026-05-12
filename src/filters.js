@@ -1,7 +1,6 @@
-// Filter / search / sort logic.
-// Filter / search / sort logic.
-// Demonstrates: array methods (.filter, .sort), callback functions,
-// arrow functions, destructuring, template literals, ternary operator.
+import { getFavoriteIds } from './favorites.js';
+
+
 const applySearch = (pokemon, query) => {
   if (!query) return pokemon;
   const lower = query.toLowerCase();
@@ -13,6 +12,11 @@ const applyTypeFilter = (pokemon, type) => {
   return pokemon.filter((p) => p.types.includes(type));
 };
 
+const applyFavoritesFilter = (pokemon, favoritesOnly) => {
+  if (!favoritesOnly) return pokemon;
+  const favIds = getFavoriteIds();
+  return pokemon.filter((p) => favIds.includes(p.id));
+};
 
 const FIELD_MAP = {
   id: 'id',
@@ -27,7 +31,6 @@ const applySort = (pokemon, sortKey) => {
   const dir = direction === 'desc' ? -1 : 1;
   const dataField = FIELD_MAP[field];
 
-  // Spread to avoid mutating the original array
   return [...pokemon].sort((a, b) => {
     const av = a[dataField];
     const bv = b[dataField];
@@ -41,6 +44,7 @@ export const applyFilters = (pokemon, state) => {
   let result = pokemon;
   result = applySearch(result, state.search);
   result = applyTypeFilter(result, state.type);
+  result = applyFavoritesFilter(result, state.favoritesOnly);
   result = applySort(result, state.sortBy);
   return result;
 };

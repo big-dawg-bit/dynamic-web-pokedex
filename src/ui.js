@@ -1,4 +1,6 @@
 
+import { isFavorite } from './favorites.js';
+
 const TYPE_COLORS = {
   normal: '#A8A878',
   fire: '#F08030',
@@ -20,11 +22,8 @@ const TYPE_COLORS = {
   fairy: '#EE99AC',
 };
 
-
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
-
 const formatId = (id) => `#${String(id).padStart(3, '0')}`;
-
 const formatHeight = (dm) => `${(dm / 10).toFixed(1)} m`;
 const formatWeight = (hg) => `${(hg / 10).toFixed(1)} kg`;
 
@@ -36,9 +35,21 @@ const renderTypeBadges = (types) =>
     })
     .join('');
 
+const renderFavoriteButton = (id) => {
+  const fav = isFavorite(id);
+  return `
+    <button
+      class="favorite-btn ${fav ? 'is-favorite' : ''}"
+      data-id="${id}"
+      aria-label="${fav ? 'Remove from favorites' : 'Add to favorites'}"
+    >${fav ? '❤️' : '🤍'}</button>
+  `;
+};
+
 
 const renderCard = (pokemon) => `
   <article class="pokemon-card" data-id="${pokemon.id}">
+    ${renderFavoriteButton(pokemon.id)}
     <div class="pokemon-card__id">${formatId(pokemon.id)}</div>
     <img src="${pokemon.sprite}" alt="${pokemon.name}" class="pokemon-card__sprite" />
     <h2 class="pokemon-card__name">${capitalize(pokemon.name)}</h2>
@@ -64,6 +75,7 @@ const renderTableRow = (pokemon) => `
     <td class="cell-height">${formatHeight(pokemon.height)}</td>
     <td class="cell-weight">${formatWeight(pokemon.weight)}</td>
     <td class="cell-xp">${pokemon.baseExperience}</td>
+    <td class="cell-fav">${renderFavoriteButton(pokemon.id)}</td>
   </tr>
 `;
 
@@ -79,6 +91,7 @@ export const renderTable = (pokemonList, container) => {
           <th>Height</th>
           <th>Weight</th>
           <th>Base XP</th>
+          <th>Fav</th>
         </tr>
       </thead>
       <tbody>
@@ -87,4 +100,5 @@ export const renderTable = (pokemonList, container) => {
     </table>
   `;
 };
+
 export { capitalize, formatId, formatHeight, formatWeight, TYPE_COLORS };

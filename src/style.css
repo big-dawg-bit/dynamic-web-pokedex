@@ -50,7 +50,8 @@ header h1 {
   flex-wrap: wrap;
 }
 
-.view-toggle {
+.view-toggle,
+.filter-toggle {
   padding: 0.4rem 0.9rem;
   background: transparent;
   border: 1px solid #ccc;
@@ -61,7 +62,8 @@ header h1 {
   transition: all 0.15s ease;
 }
 
-.view-toggle:hover {
+.view-toggle:hover,
+.filter-toggle:hover {
   background: #f0f0f0;
 }
 
@@ -69,6 +71,12 @@ header h1 {
   background: var(--text);
   color: white;
   border-color: var(--text);
+}
+
+.filter-toggle.active {
+  background: #e74c3c;
+  color: white;
+  border-color: #e74c3c;
 }
 
 .control-input {
@@ -112,6 +120,7 @@ header h1 {
 }
 
 .pokemon-card {
+  position: relative;
   background: var(--card-bg);
   border-radius: var(--radius);
   padding: 1rem;
@@ -147,6 +156,29 @@ header h1 {
   justify-content: center;
   gap: 0.4rem;
   flex-wrap: wrap;
+}
+
+/* === Favorite button === */
+.favorite-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: transform 0.15s ease;
+}
+
+.favorite-btn:hover {
+  transform: scale(1.2);
+}
+
+/* Heart button inside the table cell — not absolutely positioned */
+.pokemon-table .favorite-btn {
+  position: static;
 }
 
 /* === Pokemon table (list view) === */
