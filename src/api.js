@@ -1,0 +1,1 @@
+// PokeAPI fetch layer — handles list + detail requests with LocalStorage caching.

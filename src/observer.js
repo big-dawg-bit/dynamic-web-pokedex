@@ -1,0 +1,1 @@
+// IntersectionObserver for lazy-loading sprites.

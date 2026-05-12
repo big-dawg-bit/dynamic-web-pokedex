@@ -1,0 +1,1 @@
+// Renders the Pokemon list, cards, and detail view.

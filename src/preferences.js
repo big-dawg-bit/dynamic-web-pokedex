@@ -1,0 +1,1 @@
+// User preferences: theme switcher + cache management.

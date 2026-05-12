@@ -1,0 +1,1 @@
+// Favorite Pokemon CRUD against LocalStorage.
