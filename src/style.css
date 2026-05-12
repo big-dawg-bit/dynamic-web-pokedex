@@ -4,6 +4,7 @@
   --card-bg: #ffffff;
   --text: #2c3e50;
   --text-muted: #7f8c8d;
+  --border: #e0e0e0;
   --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   --radius: 10px;
 }
@@ -31,18 +32,49 @@ header h1 {
   font-size: 1.75rem;
 }
 
+/* === Controls bar (view toggle, filters later) === */
+.controls {
+  padding: 0.75rem 2rem;
+  background: var(--card-bg);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.view-toggle {
+  padding: 0.4rem 0.9rem;
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: all 0.15s ease;
+}
+
+.view-toggle:hover {
+  background: #f0f0f0;
+}
+
+.view-toggle.active {
+  background: var(--text);
+  color: white;
+  border-color: var(--text);
+}
+
 #app {
   padding: 1rem 2rem;
 }
 
-/* === Pokemon grid === */
+/* === Pokemon grid (cards view) === */
 .pokemon-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1rem;
 }
 
-/* === Pokemon card === */
 .pokemon-card {
   background: var(--card-bg);
   border-radius: var(--radius);
@@ -81,6 +113,55 @@ header h1 {
   flex-wrap: wrap;
 }
 
+/* === Pokemon table (list view) === */
+.pokemon-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.pokemon-table thead {
+  background: var(--text);
+  color: white;
+}
+
+.pokemon-table th,
+.pokemon-table td {
+  padding: 0.6rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.pokemon-table tbody tr {
+  transition: background 0.15s ease;
+  cursor: pointer;
+}
+
+.pokemon-table tbody tr:hover {
+  background: #f8f8f8;
+}
+
+.pokemon-table .cell-sprite img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.pokemon-table .cell-name {
+  font-weight: 500;
+}
+
+.type-stack {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+/* === Type badges (shared) === */
 .type-badge {
   display: inline-block;
   padding: 0.2rem 0.6rem;
