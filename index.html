@@ -15,6 +15,7 @@
         <button class="view-toggle active" data-view="cards">Cards</button>
         <button class="view-toggle" data-view="table">Table</button>
         <button id="favorites-toggle" class="filter-toggle">♥ Favorites (0)</button>
+        <button id="team-builder-btn" class="filter-toggle">🛡️ Build Team</button>
       </div>
 
       <div class="control-group">
@@ -47,12 +48,60 @@
       <p>Loading...</p>
     </main>
 
-    <!-- Detail modal — hidden by default, populated on card click -->
+    <!-- Detail modal (Step 11) -->
     <div id="detail-modal" class="modal" hidden>
       <div class="modal-overlay" data-close></div>
       <div class="modal-content" role="dialog" aria-modal="true">
         <button class="modal-close" data-close aria-label="Close">×</button>
         <div id="detail-content"></div>
+      </div>
+    </div>
+
+    <!-- Team builder modal (Step 12) -->
+    <div id="team-modal" class="modal" hidden>
+      <div class="modal-overlay" data-close></div>
+      <div class="modal-content team-modal-content" role="dialog" aria-modal="true">
+        <button class="modal-close" data-close aria-label="Close">×</button>
+        <h2 class="team-modal-title">Team Builder</h2>
+
+        <form id="team-form" novalidate>
+          <div class="field">
+            <label for="team-name">Team name</label>
+            <input
+              type="text"
+              id="team-name"
+              minlength="3"
+              maxlength="20"
+              required
+              placeholder="My Awesome Team"
+            />
+            <div class="field-error" data-error-for="name"></div>
+          </div>
+
+          <div class="field">
+            <label for="team-notes">Notes (optional)</label>
+            <textarea
+              id="team-notes"
+              maxlength="200"
+              rows="2"
+              placeholder="Notes about strategy, type coverage, etc."
+            ></textarea>
+            <div class="field-error" data-error-for="notes"></div>
+          </div>
+
+          <div class="field">
+            <label>Pick 6 from your favorites (<span id="team-pick-count">0/6</span>)</label>
+            <div id="team-pickable" class="pickable-grid"></div>
+            <div class="field-error" data-error-for="pokemonIds"></div>
+          </div>
+
+          <button type="submit" class="team-save-btn">Save Team</button>
+        </form>
+
+        <hr class="team-divider" />
+
+        <h3 class="saved-teams-title">Saved Teams</h3>
+        <div id="saved-teams-list"></div>
       </div>
     </div>
 

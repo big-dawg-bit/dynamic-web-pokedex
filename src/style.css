@@ -10,6 +10,7 @@
   --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   --accent: #2c3e50;
   --accent-text: #ffffff;
+  --error: #e74c3c;
   --radius: 10px;
 }
 
@@ -23,6 +24,7 @@ body.theme-dark {
   --border: #404040;
   --shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   --accent: #4a6fa5;
+  --error: #ff6b5b;
 }
 
 * {
@@ -159,7 +161,6 @@ header h1 {
   text-align: center;
   box-shadow: var(--shadow);
   cursor: pointer;
-
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.3s ease;
@@ -276,7 +277,7 @@ header h1 {
   font-weight: 500;
 }
 
-/* === Detail modal === */
+/* === Modals (shared) === */
 .modal {
   position: fixed;
   inset: 0;
@@ -311,6 +312,10 @@ header h1 {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
+.team-modal-content {
+  max-width: 800px;
+}
+
 .modal-close {
   position: absolute;
   top: 0.5rem;
@@ -328,6 +333,7 @@ header h1 {
   color: var(--text);
 }
 
+/* === Detail modal === */
 .detail-header {
   display: flex;
   align-items: center;
@@ -426,6 +432,186 @@ header h1 {
   background: var(--accent);
   border-radius: 4px;
   transition: width 0.3s ease;
+}
+
+/* === Team builder modal === */
+.team-modal-title {
+  margin: 0 0 1rem;
+}
+
+#team-form .field {
+  margin-bottom: 1rem;
+}
+
+#team-form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+}
+
+#team-form input[type="text"],
+#team-form textarea {
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+#team-form input[type="text"]:focus,
+#team-form textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+.field.has-error input,
+.field.has-error textarea {
+  border-color: var(--error);
+}
+
+.field-error {
+  color: var(--error);
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+  min-height: 1.1em;
+}
+
+.pickable-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.5rem;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+}
+
+.pickable-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  background: var(--card-bg);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.8rem;
+  transition: border-color 0.15s ease;
+}
+
+.pickable-card:hover {
+  border-color: var(--border);
+}
+
+.pickable-card.is-picked {
+  border-color: var(--accent);
+  background: var(--hover-bg);
+}
+
+.pickable-card input[type="checkbox"] {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+}
+
+.pickable-card img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.team-save-btn {
+  padding: 0.6rem 1.2rem;
+  background: var(--accent);
+  color: var(--accent-text);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.team-save-btn:hover {
+  opacity: 0.9;
+}
+
+.team-divider {
+  margin: 1.5rem 0 1rem;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+.saved-teams-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+}
+
+.muted {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.saved-team {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.saved-team__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.saved-team__header h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.delete-team-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0 0.3rem;
+}
+
+.delete-team-btn:hover {
+  color: var(--error);
+}
+
+.saved-team__notes {
+  margin: 0.4rem 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.saved-team__roster {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.saved-team__roster img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  background: var(--card-bg);
+  border-radius: 4px;
 }
 
 @media (max-width: 500px) {
