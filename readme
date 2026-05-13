@@ -1,0 +1,125 @@
+# Dynamic Web — Pokédex
+
+A single-page Pokédex built with vanilla JavaScript and Vite, consuming the public [PokéAPI](https://pokeapi.co/). Browse, search, filter and sort Pokémon in either a card or table view, mark favorites, switch between light and dark themes, and build custom teams of six — all persisted to `localStorage` so your data is still there next time you open the app.
+
+This repository is the deliverable for the *Dynamic Web* assignment (Erasmushogeschool Brussel — Applied Computer Science).
+
+## Features
+
+- **Two views** — toggle between a visual card grid and a sortable table (6+ columns).
+- **Search** — instant filtering by Pokémon name.
+- **Type filter** — narrow the list down to a single type, populated dynamically from the API.
+- **Sort** — by ID, name, height, weight or base XP (ascending or descending).
+- **Detail modal** — click any Pokémon for full stats, abilities, types and sprites.
+- **Favorites** — mark any Pokémon to keep it in your personal collection (persisted to `localStorage`).
+- **Team builder** — assemble named teams of six Pokémon from your favorites, with notes and form validation. Saved teams persist between sessions.
+- **Theme toggle** — light/dark mode, remembered between visits.
+- **Responsive design** — works on desktop, tablet and mobile.
+
+## Tech stack
+
+- **Vite** for the dev server and build pipeline
+- **Vanilla JavaScript** (ES modules) — no framework
+- **Plain CSS** with CSS variables for theming
+- **[PokéAPI](https://pokeapi.co/)** as the data source
+- **`localStorage`** for favorites, theme preference and saved teams
+
+## Project structure
+
+```
+dynamic-web-pokedex/
+├── public/              Static assets
+├── src/                 Application source
+│   └── main.js          Entry point
+├── index.html           App shell, controls and modals
+└── package.json
+```
+
+## Getting started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) 18 or newer
+- npm (bundled with Node)
+
+### Installation
+
+```bash
+git clone https://github.com/big-dawg-bit/dynamic-web-pokedex.git
+cd dynamic-web-pokedex
+npm install
+```
+
+### Run the dev server
+
+```bash
+npm run dev
+```
+
+The app will be available at the URL printed in the terminal (typically `http://localhost:5173`).
+
+### Build for production
+
+```bash
+npm run build
+```
+
+The optimised output is written to `dist/`.
+
+### Preview the production build
+
+```bash
+npm run preview
+```
+
+## How to use
+
+1. Wait for the initial fetch to complete — the result counter updates from *Loading…* to the total number of Pokémon loaded.
+2. Use the **search box** to filter by name, the **type dropdown** to filter by type, and the **sort dropdown** to reorder the list.
+3. Switch between **Cards** and **Table** to change the layout.
+4. Click any Pokémon to open the **detail modal**.
+5. Click the favorite button on any Pokémon to add it to your favorites. Use the **Favorites** button at the top to show only those.
+6. Click **Build Team** to open the team builder, pick six favorites, name your team and save it.
+7. Click the theme button in the header to switch between light and dark mode.
+
+## Required concepts — where to find them
+
+The assignment requires demonstrating the following JavaScript concepts. Each entry points to the file and line(s) where it can be found.
+
+| Concept | File | Lines |
+| --- | --- | --- |
+| `fetch` + JSON parsing | `src/…` | … |
+| `async` / `await` | `src/…` | … |
+| Promises | `src/…` | … |
+| Arrow functions | `src/…` | … |
+| Template literals | `src/…` | … |
+| `const` / `let` | `src/…` | … |
+| Array methods (`map`, `filter`, `sort`, `find`, …) | `src/…` | … |
+| Ternary operator | `src/…` | … |
+| Callbacks | `src/…` | … |
+| DOM manipulation | `src/…` | … |
+| Event listeners | `src/…` | … |
+| Form validation (team builder) | `src/…` | … |
+| `localStorage` (favorites, theme, teams) | `src/…` | … |
+| Observer API (Intersection / Mutation Observer) | `src/…` | … |
+
+> Fill in the exact file paths and line numbers per the rubric before submission.
+
+## Screenshots
+
+> Add screenshots here before submission.
+
+- `docs/screenshots/cards-view.png`
+- `docs/screenshots/table-view.png`
+- `docs/screenshots/detail-modal.png`
+- `docs/screenshots/team-builder.png`
+- `docs/screenshots/dark-mode.png`
+
+## Credits
+
+- Data: [PokéAPI](https://pokeapi.co/) — free public Pokémon API
+- Sprites and names © Nintendo / Game Freak — used for educational purposes only
+
+## License
+
+This project is submitted as coursework and is not intended for redistribution.
